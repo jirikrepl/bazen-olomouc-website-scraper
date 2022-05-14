@@ -5,6 +5,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer';
+import { sleep } from './utils.js';
 
 (async () => {
   // eslint-disable-next-line no-underscore-dangle
@@ -31,9 +32,17 @@ import puppeteer from 'puppeteer';
   console.log(`${nodes[0].localName}: ${nodes[0].firstChild.data}`);
   console.log(`Node: ${nodes[0].toString()}`);
 
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(`http://localhost:${port}`);
+  for (let i = 0; i < 20; i += 1) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setUserAgent('Mozilla/5.0 (Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0');
+    await page.goto(`http://localhost:${port}`);
+    console.log('opened page', i);
+    await sleep(1000);
+  }
+  // const page = await browser.newPage();
+  // await page.setUserAgent('Mozilla/5.0 (Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0');
+  // await page.goto(`http://localhost:${port}`);
   // await page.screenshot({ path: 'example.png' });
   // await browser.close();
 })();
