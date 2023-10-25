@@ -1,4 +1,7 @@
 # Bazén Olomouc
+![bazen olomour](website.png)
+
+Periodically scrape occupied places from Olomouc swimming pool website. Send data to Google Analytics.
 
 ## Docker dev
 
